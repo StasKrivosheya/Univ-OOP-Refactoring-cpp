@@ -1,16 +1,16 @@
-#include<iostream>
+#include <iostream>
 #include <string>
-using namespace std;
 
-int main(void){
-    
-    string name;
-    
-    for(int i = 0; i < 3; i++){
-        cout << "What is your name? ";
-        getline (cin, name);
+int main()
+{
+    std::string name;
+
+    for(int i = 0; i < 3; i++)
+    {
+        std::cout << "What is your name? ";
+        std::getline (std::cin, name);
         
-        cout << "Hello, " << name << "!\n";
-        cout << endl;
+        std::cout << "Hello, " << name << "!\n";
+        std::cout << std::endl;
     }
 }
