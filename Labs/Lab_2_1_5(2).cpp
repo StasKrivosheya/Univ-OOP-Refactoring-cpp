@@ -1,46 +1,38 @@
-// Lab_2_1_5(2).cpp: определяет точку входа для консольного приложения.
-//
-#include "stdafx.h"
 #include <iostream>
-using namespace std;
 
+void calculateTax(float grossPrice, float taxRate)
+{
+	std::cout << "grossprice = " << grossPrice
+						<< "\ttaxrate = " << taxRate << std::endl;
 
-void tax_calculate(float grossprice, float taxrate) {
-	
+	if (grossPrice > 0)
+	{
+		if ((taxRate > 0) && (taxRate <= 100))
+		{
+			float netPrice, taxValue;
 
-	cout << "grossprice = " << grossprice << " taxrate = " << taxrate << endl;
+			netPrice = grossPrice / (1 + (taxRate / 100));
+			taxValue = netPrice * (taxRate / 100);
 
-	float netprice, taxvalue;
-	
-	if (grossprice > 0) {
-		if ((taxrate > 0) and (taxrate <= 100)) {
-			netprice = grossprice / (1 + (taxrate / 100));
-			taxvalue = netprice * (taxrate / 100);
+			std::cout << "Net price: " << netPrice << std::endl;
+			std::cout << "Tax value: " << taxValue << std::endl;
+			std::cout << std::endl;
+
+			return;
 		}
 	}
-
-	cout << "Net price: " << netprice << endl;
-	cout << "Tax value: " << taxvalue << endl;
-	cout << endl;
+	std::cout << "Wrong info!";
+	std::cout << std::endl;
 }
 
-int main(void){
-	
-	
-	
-	// cout << "Enter a gross price: ";
-	// cin >> grossprice;
-	// cout << "Enter a tax rate: ";
-	// cin >> taxrate;
-	
-	tax_calculate(123, 23);
-	tax_calculate(123, 50);
-	tax_calculate(123, 98);
-	tax_calculate(11, 10);
-	
+int main(void)
+{
+	calculateTax(123, 23);
+	calculateTax(123, 50);
+	calculateTax(123, 98);
+	calculateTax(11, 10);
 
 	system("pause");
 
 	return 0;
 }
-
