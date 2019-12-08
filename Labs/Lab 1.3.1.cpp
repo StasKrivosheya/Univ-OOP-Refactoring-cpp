@@ -1,13 +1,14 @@
 #include <iostream>
-#include<iomanip>
-#include<string>
 
-int main(){
-        
-    int sec_in_three_min=3*60; 
-    int sec_in_five_min=6*60;  
-    int result = sec_in_three_min * 60;
-    float pi=3.141526;
-    
-    std::cout << "result:  " << result <<  std::endl;
+int main()
+{        
+    const int SEC_IN_THREE_MIN = 3 * 60; 
+    //const int SEC_IN_FIVE_MIN = 6 * 60;  
+    //const float PI = 3.141526;
+
+    int secondsThreeHours = SEC_IN_THREE_MIN * 60;
+
+    std::cout << "The amount of seconds in 3 hours:\t" << secondsThreeHours <<  std::endl;
+
+    return 0;
 }
