@@ -1,79 +1,87 @@
-// Lab_5_3_10(5).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include <iostream>
-#include<string>
-#include <cmath>
+#include <string>
 
-using namespace std;
-
-class Fraction { 
-public:  
-	Fraction(int numerator, int denominator); 
-	string toString(); 
-	double toDouble(); 
+class Fraction
+{
 private:
-	int numerator; 
-	int denominator; 
+	int numerator_;
+	int denominator_;
+public:
+	Fraction(int numerator, int denominator)
+	{
+		numerator_ = numerator;
+		denominator_ = denominator;
+	}
+
+	int get_numerator()
+	{
+		return numerator_;
+	}
+	void set_numerator(int numerator)
+	{
+		numerator_ = numerator;
+	}
+
+	int get_denominator()
+	{
+		return denominator_;
+	}
+	void set_denominator(int denominator)
+	{
+		denominator_ = denominator;
+	}
+	std::string to_string();
+	float decimalize();
 };
 
-Fraction::Fraction(int numerator, int denominator)
+float Fraction::decimalize()
 {
-	this->numerator = numerator;
-	this->denominator = denominator;
+	return (float)numerator_ / denominator_;
 }
 
-double Fraction::toDouble()
+std::string Fraction::to_string()
 {
-	double one = 1, answer;
+	std::string data;
+	int num, den, integer_part, remainder;
 
-	one *= this->numerator;
+	num = numerator_;
+	den = denominator_;
 
-	answer = one / this->denominator;
+	integer_part = num / den;
+	remainder = integer_part * den;
+	num -= remainder;
 
-	return answer;
-}
-string Fraction::toString()
-{
-	string data, input;
-	int num, den, whole, remain;
-	double answer, one = 1;
-	num = this->numerator;
-	den = this->denominator;
-	whole = num / den;
-	remain = whole * den;
-	num -= remain;
-	input = to_string(whole);
-	data += input;
-	data += " ";
-	input = to_string(num);
-	data += input;
+	data += "Integer part:\t";
+	data += std::to_string(integer_part);
+	data += "\nFraction:\t";
+	data += std::to_string(num);;
 	data += "/";
-	input = to_string(den);
-	data += input;
+	data += std::to_string(den);;
+
 	return data;
 }
 
 
 int main()
 {
-	int num, den; 
-	string input = ""; 
-	getline(cin, input);
-		
-	if (input.find("/") != -1) {
-		int x = input.find("/");
-		string a = input.substr(0, x);
-		string b = input.substr(x + 1, input.length());
+	int num, den;
+	std::string input = "";
+	getline(std::cin, input);
+
+	const int found = input.find("/");
+	if (found != -1)
+	{
+		std::string a = input.substr(0, found);
+		std::string b = input.substr(found + 1, input.length());
 		num = stoi(a, 0, 10);
 		den = stoi(b, 0, 10);
+
+		Fraction fraction(num, den);
+		std::cout << fraction.to_string() << "\nIt is " << fraction.decimalize() << " in decimal." << std::endl;
 	}
-			
-	Fraction fraction(num, den);
-	cout << fraction.toString() << " is " << fraction.toDouble() << " in decimal" << endl;
-	
+	else
+		std::cout << "Wrong input!" << std::endl;
+
 	system("pause");
 	return 0;
 }
-

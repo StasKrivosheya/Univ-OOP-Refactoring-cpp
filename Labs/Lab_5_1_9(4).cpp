@@ -1,65 +1,74 @@
-// Lab_5_1_9(4).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include <iostream>
 #include <string>
 
-using namespace std;
-
-
-class ShopItemOrder {
-
-	/* The item order shall store the following information : 
-		-item name; 
-		-item unit price; 
-		-number of items ordered. */
-
+class ShopItemOrder
+{
 private:
-	string name; 
-	float unit_price; 
-	int number_ordered;
+	std::string name_;
+	float unit_price_;
+	int number_ordered_;
 
-/* There will be access methods allowing to:
-		-get and set all of the above information;
-		-get the total price for the order; */
+	/* There will be access methods allowing to:
+			-get and set all of the above information;
+			-get the total price for the order; */
 
 public:
-	void set(string name_, double unit_price_, int number_ordered_){
-		name = name_;
-		unit_price = unit_price_;
-		number_ordered = number_ordered_;
-	}
-	string NameItem() {
-		return name;
-	}
-	float PriceItem() {
-		return unit_price;
-	}
-	int NumberItem() {
-		return number_ordered;
-	}
-	double GetTotalPrice() {
-		return number_ordered * unit_price;
-	}
-	
-	/* Print the order in a user-friendly way. */
-	
-	void Print()
+	std::string get_name()
 	{
-		cout << "Ordered: " << name << endl << "Number: " << number_ordered << endl << "Price: " << unit_price << endl;;
+		return name_;
 	}
+	void set_name(std::string name)
+	{
+		name_ = name;
+	}
+
+	float get_unit_price()
+	{
+		return unit_price_;
+	}
+	void set_unit_price(float unit_price)
+	{
+		unit_price_ = unit_price;
+	}
+
+	int get_number_ordered()
+	{
+		return number_ordered_;
+	}
+	void set_number_ordered(int number_ordered)
+	{
+		number_ordered_ = number_ordered;
+	}
+
+	float get_total_prise()
+	{
+		return number_ordered_ * unit_price_;
+	}
+
+	ShopItemOrder(std::string name, float unit_price, int number_ordered)
+	{
+		name_ = name;
+		unit_price_ = unit_price;
+		number_ordered_ = number_ordered;
+	}
+
+	void print_console();
 };
 
-int main()
-{	
-	ShopItemOrder item_1;
-	item_1.set("MacBook", 2000., 2);
-	item_1.Print();
-	cout << "===========" << endl;
-	cout << "Total price: " << item_1.GetTotalPrice() << endl;
-
-	system("pause");
-    return 0;
+void ShopItemOrder::print_console()
+{
+	std::cout << "Ordered: " << get_name() << std::endl
+		<< "Number: " << get_number_ordered() << std::endl
+		<< "Price: " << get_unit_price() << std::endl;;
 }
 
+int main()
+{
+	ShopItemOrder item_1("MacBook", 2000.0, 2);
+	item_1.print_console();
+	std::cout << "================" << std::endl;
+	std::cout << "Total price: " << item_1.get_total_prise() << std::endl;
+
+	system("pause");
+	return 0;
+}

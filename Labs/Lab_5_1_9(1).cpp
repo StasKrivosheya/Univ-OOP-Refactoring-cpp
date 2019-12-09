@@ -1,43 +1,78 @@
-// Lab_5_1_9(1).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include<iostream>
 #include<string>
-using namespace std;
 
-class Person{
+class Person
+{
+private:
+	std::string name_;
+	std::string color_eye_;
+	std::string favorite_tv_series_;
+	int age_;
 public:
-	string name;
-	string color_eye;
-	string favorit_tv_series;
-	int age;	
+	std::string get_name()
+	{
+		return name_;
+	}
+	void set_name(std::string name)
+	{
+		name_ = name;
+	}
+
+	std::string get_color_eye()
+	{
+		return color_eye_;
+	}
+	void set_color_eye(std::string color_eye)
+	{
+		color_eye_ = color_eye;
+	}
+
+	std::string get_favorite_tv_series()
+	{
+		return favorite_tv_series_;
+	}
+	void set_favorite_tv_series(std::string favorite_tv_series)
+	{
+		favorite_tv_series_ = favorite_tv_series;
+	}
+
+	int get_age()
+	{
+		return age_;
+	}
+	void set_age(int age)
+	{
+		age_ = age;
+	}
+
+	Person(std::string name, std::string color_eye, std::string favorite_tv_series, int age)
+	{
+		name_ = name;
+		color_eye_ = color_eye;
+		favorite_tv_series_ = favorite_tv_series;
+		age_ = age;
+	}
+
+	void print_console();
 };
 
-void print(Person* person){
-	cout << person->name << " is " << person->age << " years old.\n" << "He has a " << person->color_eye << " eye color. " 
-		<< person->name << " likes to watch TV series \"" << person->favorit_tv_series << "\"." << endl;
+void Person::print_console()
+{
+	std::cout << get_name() << " is " << get_age() << " years old.\n"
+		<< "He has a " << get_color_eye() << " eye color. "
+		<< get_name() << " likes to watch TV series \"" << get_favorite_tv_series() << "\"." << std::endl;
 }
- 
-int main(){  
-	
-	Person person;  
-	person.name = "Harry";  
-	person.age  = 23;
-	person.color_eye = "green";
-	person.favorit_tv_series = "Black Mirror";
-	cout << "Meet " << person.name << "!" << endl;
-	print(&person);
-	
-	Person friend_;
-	friend_.name = "Tim";
-	friend_.age = 26;
-	friend_.color_eye = "blue";
-	friend_.favorit_tv_series = "Mr. Robot";
-	cout << "Meet " << friend_.name << "!" << endl;
-	print(&friend_);
+
+int main()
+{
+	Person person1("Harry", "green", "Black Mirror", 23);
+	std::cout << "Meet " << person1.get_name() << "!" << std::endl;
+	person1.print_console();
+
+	Person person2("Tim", "blue", "Mr. Robot", 26);
+	std::cout << "\nMeet " << person2.get_name() << "!" << std::endl;
+	person2.print_console();
 
 	system("pause");
 	return 0;
 }
-

@@ -1,29 +1,23 @@
-// Lab_3_2_12(2).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include <iostream>
-using namespace std;
 
 int main()
 {
+	const int M = 10;
+	const int N = 10;
+	int matrix[M][N] = {};
 
-	int matrix[10][10] = {};
-	
+	for (int i = 0; i < M; i++)
+		for (int j = 0; j < N; j++)
+			*(&matrix[0][0] + ((i * M) + j)) = ((i + 1) * (j + 1));
 
-	for (int i = 0; i < 10; i++)
-		for (int j = 0; j < 10; j++)
-			*(&matrix[0][0] + ((i * 10) + j)) = ((i + 1) * (j + 1));
-	
-	for(int i = 0; i < 10; i++) {
-		for(int j = 0; j < 10; j++) {
-			cout.width(4);
-			cout << matrix[i][j];  
+	for (int i = 0; i < M; i++) {
+		for (int j = 0; j < N; j++) {
+			std::cout.width(4);
+			std::cout << matrix[i][j];
 		}
-		cout << endl; 
+		std::cout << std::endl;
 	}
 
 	system("pause");
-    return 0;
+	return 0;
 }
-

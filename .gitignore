@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+#My preferences
+*.ipch
+*.suo
+*.json
+*.sqlite
+*.db
+*.opendb

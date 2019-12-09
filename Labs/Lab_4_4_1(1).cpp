@@ -1,53 +1,52 @@
-// Lab_4_4_1(1).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 int main()
 {
-	string inputString;
-	getline(cin, inputString);
-	int alphabetTab = 0;
-	int alphabet[26];	
-	int flag = 0;
-	
-	for (int i = 0; i < 26; i++) {
+	std::string input_string;
+	getline(std::cin, input_string);
+
+	const int LETTERS_AMOUNT = 26;
+	int different_letters = 0;
+	int alphabet[LETTERS_AMOUNT];
+	bool is_pangram = false;
+
+	for (int i = 0; i < LETTERS_AMOUNT; i++)
+	{
 		alphabet[i] = 0;
 	}
 
-	for (int i = 0; i < inputString.length(); i++) {
-		int insertNum = (tolower(inputString[i]) - 'a');
-		if (insertNum < 0 || insertNum > 25) {
+	for (int i = 0; i < input_string.length(); i++)
+	{
+		int letter_index = (tolower(input_string[i]) - 'a');
+
+		if (letter_index < 0 || letter_index > LETTERS_AMOUNT - 1)
+		{
 			continue;
 		}
-		if (alphabet[insertNum] == 0) {
-			alphabetTab++;
+
+		if (alphabet[letter_index] == 0)
+		{
+			different_letters++;
 		}
-		if (alphabetTab >= 26) {
-			flag = 1;
-			break;
+
+		if (different_letters >= LETTERS_AMOUNT)
+		{
+			is_pangram = true;
 		}
-		else {
-			alphabet[insertNum]++;
-		}
-	}
-	
-	for(int i = 0; i < 26; i++){
-		cout << (char)(i + 97) << " - " << alphabet[i] << endl;
+		alphabet[letter_index]++;
 	}
 
-	if (flag) {
-		cout << "Pangram" << endl;
+	for (int i = 0; i < LETTERS_AMOUNT; i++)
+	{
+		std::cout << (char)(i + 97) << " - " << alphabet[i] << std::endl;
 	}
-	else {
-		cout << "Not pangram" << endl;
-	}
+
+	if (is_pangram)
+		std::cout << "Pangram" << std::endl;
+	else
+		std::cout << "Not pangram" << std::endl;
 
 	system("pause");
 	return 0;
 }
-

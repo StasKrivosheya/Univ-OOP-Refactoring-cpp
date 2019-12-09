@@ -1,25 +1,27 @@
-// Lab_4_5_6(1).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
-#include<string>
-#include<iostream>
+#include <iostream>
 #include <sstream>
-using namespace std;
+#include <string>
 
-int main() {
-	string sentence, line;
+int main()
+{
+	std::string sentence, line;
 
-	while (getline(cin, sentence)) {
-		istringstream tr(sentence);
+	std::cout << "Input your line:\n";
+
+	while (getline(std::cin, sentence))
+	{
+		std::istringstream tr(sentence);
+
+		std::cout << "\nOutput from stream:\n";
+
 		while (tr >> line)
-			cout << line << ' ';
-		cout << endl;
+			std::cout << line << ' ';
+
+		std::cout << std::endl;
+		break;
 	}
 
-	cout << sentence << "\n";
+	std::cout << "\nOutput from string variable\n" << sentence << std::endl;
 
 	return 0;
 }
-
-
