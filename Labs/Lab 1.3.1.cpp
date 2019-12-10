@@ -6,9 +6,9 @@ int main()
     //const int SEC_IN_FIVE_MIN = 6 * 60;  
     //const float PI = 3.141526;
 
-    int secondsThreeHours = SEC_IN_THREE_MIN * 60;
+    int seconds_in_three_hours = SEC_IN_THREE_MIN * 60;
 
-    std::cout << "The amount of seconds in 3 hours:\t" << secondsThreeHours <<  std::endl;
+    std::cout << "The amount of seconds in 3 hours:\t" << seconds_in_three_hours <<  std::endl;
 
     return 0;
 }

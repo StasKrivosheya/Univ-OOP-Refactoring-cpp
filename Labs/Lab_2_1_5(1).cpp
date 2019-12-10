@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
 
-std::string yearInfo(int year)
+std::string year_info(int year)
 {
-	bool isLeap = ((year % 4 == 0) && (year % 100 != 0)) || year % 400 == 0;
+	bool is_leap = ((year % 4 == 0) && (year % 100 != 0)) || year % 400 == 0;
 	std::string info;
 
-	if (isLeap)
+	if (is_leap)
 		info = "Leap year\n";
 	else
 		info = "Common year\n";
@@ -14,20 +14,20 @@ std::string yearInfo(int year)
 	return info;
 }
 
-void printYearInfo(int year)
+void print_year_info(int year)
 {
 	std::cout << year << " == Expected value == Leap year => Function Value == "
-						<< yearInfo(year);
+						<< year_info(year);
 }
 
 int main(int year)
 {
 
-	printYearInfo(2000);
-	printYearInfo(2015);
-	printYearInfo(1999);
-	printYearInfo(1996);
-	printYearInfo(1900);
+	print_year_info(2000);
+	print_year_info(2015);
+	print_year_info(1999);
+	print_year_info(1996);
+	print_year_info(1900);
 
 	system("pause");
 

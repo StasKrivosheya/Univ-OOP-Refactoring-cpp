@@ -1,21 +1,21 @@
 #include <iostream>
 
-void calculateTax(float grossPrice, float taxRate)
+void calculate_tax(float gross_price, float tax_rate)
 {
-	std::cout << "grossprice = " << grossPrice
-						<< "\ttaxrate = " << taxRate << std::endl;
+	std::cout << "grossprice = " << gross_price
+						<< "\ttaxrate = " << tax_rate << std::endl;
 
-	if (grossPrice > 0)
+	if (gross_price > 0)
 	{
-		if ((taxRate > 0) && (taxRate <= 100))
+		if ((tax_rate > 0) && (tax_rate <= 100))
 		{
-			float netPrice, taxValue;
+			float net_price, tax_value;
 
-			netPrice = grossPrice / (1 + (taxRate / 100));
-			taxValue = netPrice * (taxRate / 100);
+			net_price = gross_price / (1 + (tax_rate / 100));
+			tax_value = net_price * (tax_rate / 100);
 
-			std::cout << "Net price: " << netPrice << std::endl;
-			std::cout << "Tax value: " << taxValue << std::endl;
+			std::cout << "Net price: " << net_price << std::endl;
+			std::cout << "Tax value: " << tax_value << std::endl;
 			std::cout << std::endl;
 
 			return;
@@ -27,10 +27,10 @@ void calculateTax(float grossPrice, float taxRate)
 
 int main(void)
 {
-	calculateTax(123, 23);
-	calculateTax(123, 50);
-	calculateTax(123, 98);
-	calculateTax(11, 10);
+	calculate_tax(123, 23);
+	calculate_tax(123, 50);
+	calculate_tax(123, 98);
+	calculate_tax(11, 10);
 
 	system("pause");
 
