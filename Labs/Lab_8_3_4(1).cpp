@@ -1,91 +1,77 @@
-// Lab_8_3_4(1).cpp: определяет точку входа для консольного приложения.
-//
-/*
-
-Подготовьте класс контейнера для двоичной древовидной структуры. 
-Двоичное дерево представляет собой структуру данных дерева, где каждый узел имеет нуль, один или два дочерних
-узлы. 
-Эти дочерние узлы упоминаются как левый ребенок и правый ребенок. 
-Этот класс состоит из трех полей:
-поле со значением;
-указатель на левый ребенок;
-указатель на правильный ребенок.
-Внедрите метод добавления значения в дерево, проверьте его с некоторыми значениями 
-(вы можете жестко закодировать значения - тестирование должно быть проще и
-Быстрее). Перегрузите оператор <<, чтобы распечатать все узлы inorder 
-(inorder - метод обхода дерева, где вы сначала проходите левое дочернее
-inorder, затем распечатать значение текущего узла, а затем пересечь правый дочерний регистр).
-
-*/
-
-#include "stdafx.h"
 #include <iostream>
 #include <string>
-#include <conio.h>
-using namespace std;
 
-struct node
+struct Node
 {
-	int value;                        
-	node *left, *right;
+	int value_;
+	Node* left_;
+	Node* right_;
+	Node(int value, Node* left = nullptr, Node* right = nullptr)
+	{
+		value_ = value;
+		left_ = left;
+		right_ = right;
+	}
 };
 
-void push(int a, node *&t)
+void push(int a, Node*& t)
 {
-	if (!t)                   
+	if (t == nullptr)
 	{
-		t = new node;                
-		t->value = a;                
-		t->left = t->right = 0;       
-		return;                         
+		t = new Node(a);
+		return;
 	}
 
-	if (t->value > a) {
-		push(a, t->left);
-	} else {
-		push(a, t->right);
-	}
+	if (t->value_ > a)
+		push(a, t->left_);
+	else
+		push(a, t->right_);
 }
 
-void clear(node *root) {
-	if (!root) return;
-	clear(root->left);
-	clear(root->right);
+void clear(Node* root)
+{
+	if (root == nullptr)
+		return;
+
+	clear(root->left_);
+	clear(root->right_);
 	delete root;
 	return;
 }
 
-ostream& inorder_recursive(ostream &out, node *current)
-{	
-	if (current == nullptr) return out;	
-	inorder_recursive(out, current->left);
-	out << current->value << '\n';	
-	return inorder_recursive(out, current->right);
+void inorder_recursive(std::ostream& out, Node* current)
+{
+	if (current == nullptr)
+		return;
+
+	inorder_recursive(out, current->left_);
+	out << current->value_ << '\t';
+	inorder_recursive(out, current->right_);
 }
 
-ostream &operator << (ostream &ostr, node *bs)
+std::ostream& operator<<(std::ostream& ostr, Node* bs)
 {
-	return inorder_recursive(ostr, bs);
+	inorder_recursive(ostr, bs);
+	return ostr;
 }
 
 
 int main()
-{	
+{
+	Node* root = 0;
+	int nodes_to_push, value;
+	std::cout << "Input the amount of nodes to push: ";
+	std::cin >> nodes_to_push;
 
-	node *root = 0;
-	int n;                              
-	int s;                              	
-	cin >> n;
-
-	for(int i = 0; i<n; ++i)
+	for (int i = 0; i < nodes_to_push; ++i)
 	{
-		cin >> s;                       
-		push(s, root);                
+		std::cin >> value;
+		push(value, root);
 	}
-	
-	cout << root;
-	clear(root);
-	system("pause");
-    return 0;
-}
 
+	std::cout << std::endl << "Tree is:\n" << root << std::endl;
+	clear(root);
+
+	system("pause");
+	return 0;
+}

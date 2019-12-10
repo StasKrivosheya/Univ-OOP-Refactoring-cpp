@@ -1,28 +1,26 @@
-// Lab_7_1_1(1).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include <iostream>
 #include <string>
-using namespace std;
 
-int main(void) {
-	int a = 8, b = 0, c = 0;
-	cout << "Value b : ";
-	cin >> b;
-	
-	try {
+int main()
+{
+	const int numerator = 8;
+	int denominator = 0, result = 0;
 
-		if (b == 0) throw exception("Your input is not valid, you can't divide by zero.\n");
-		c = a / b;
-	
-	}
-	catch (exception&e)
+	std::cout << "Value b : ";
+	std::cin >> denominator;
+
+	try
 	{
-		cout << e.what();
+		if (denominator == 0)
+			throw std::exception("Your input is not valid, you can't divide by zero.\n");
+		result = numerator / denominator;
+		std::cout << result << std::endl;
 	}
-	
-	cout << c << endl;
+	catch (std::exception& e)
+	{
+		std::cout << e.what();
+	}
+
 	system("pause");
 	return 0;
 }

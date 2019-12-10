@@ -1,63 +1,59 @@
-// Lab_6_4_4(1).cpp: определяет точку входа для консольного приложения.
-//
+#include <iostream>
+#include <string>
 
-#include "stdafx.h"
-#include<iostream>
-#include<string>
-
-using namespace std;
-
-class StringValidator{
+class StringValidator
+{
 public:
 	virtual ~StringValidator() {};
-	virtual bool isValid(string input)= 0;
+	virtual bool is_valid(std::string input) = 0;
 };
 
 class ExactValidator : public StringValidator
 {
 private:
-	string password;
-
+	std::string password;
 public:
-	ExactValidator(string input) {this->password = input;}
-	bool isValid(string input);
+	ExactValidator(std::string input)
+	{
+		password = input;
+	}
+	bool is_valid(std::string input);
 };
 
-bool ExactValidator::isValid(string input)
+bool ExactValidator::is_valid(std::string input)
 {
-	cout << input << endl;
-	if (input.compare(this->password) == 0)
-		return true;
-	else
-		return false;
+	return input == password;
 }
 
-class DummyValidator : public StringValidator {
+class DummyValidator : public StringValidator
+{
 public:
-	bool isValid(string input);
+	bool is_valid(std::string input);
 };
 
-bool DummyValidator::isValid(string input){
+bool DummyValidator::is_valid(std::string input)
+{
 	return true;
 }
 
 
-void printValid(StringValidator &validator, string input){  
-	cout << "The string '" << input << "' is "       
-		<< (validator.isValid(input) ? "valid" : "invalid");
+void print_valid(StringValidator& validator, std::string input) {
+	std::cout << "The string '" << input << "' is "
+		<< (validator.is_valid(input) ? "valid" : "invalid");
 }
 
-int main(){  
-	DummyValidator dummy;  
-	printValid(dummy, "hello");  
-	cout << endl;  
-	ExactValidator exact("secret");  
-	printValid(exact, "hello");
-	cout << endl;
-	printValid(exact, "secret");
-	cout << endl;
-	cout << endl;
+int main() {
+	DummyValidator dummy;
+	print_valid(dummy, "hello");
+	std::cout << std::endl;
+
+	ExactValidator exact("secret");
+	print_valid(exact, "hello");
+	std::cout << std::endl;
+
+	print_valid(exact, "secret");
+	std::cout << std::endl << std::endl;
+
 	system("pause");
 	return 0;
 }
-

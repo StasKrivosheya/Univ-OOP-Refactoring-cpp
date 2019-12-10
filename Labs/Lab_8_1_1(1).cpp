@@ -1,36 +1,36 @@
-// Lab_8_1_1(1).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include <iostream>
 #include <vector>
-using namespace std;
 
-class Matrix {
-public:	
-	friend ostream& operator<<(ostream &out, Matrix &x);
-	friend istream& operator>>(istream &in, Matrix &x);
+class Matrix
+{
 private:
-	vector< vector<int> > arr;
-	int n;
+	std::vector<std::vector<int>> arr;
+	int size_;
+public:
+	Matrix(int size) : size_(size) { }
+	friend std::ostream& operator<<(std::ostream& out, const Matrix& x);
+	friend std::istream& operator>>(std::istream& in, Matrix& x);
 };
 
-ostream& operator<<(ostream &out, Matrix &x) {
-	for (int i = 0; i<x.n; i++) {
-		for (int j = 0; j<x.n; j++)
+std::ostream& operator<<(std::ostream& out, const Matrix& x)
+{
+	for (int i = 0; i < x.size_; i++)
+	{
+		for (int j = 0; j < x.size_; j++)
 			out << x.arr[i][j] << " ";
-		out << endl;
+		out << std::endl;
 	}
-	out << x.n << " " << x.n;
 	return out;
 }
 
-istream& operator>>(istream &in, Matrix &x) {
-	in >> x.n;
+std::istream& operator>>(std::istream& in, Matrix& x)
+{
 	int a;
-	for (int i = 0; i<x.n; i++) {
-		vector<int> row;
-		for (int j = 0; j<x.n; j++) {
+	for (int i = 0; i < x.size_; i++)
+	{
+		std::vector<int> row;
+		for (int j = 0; j < x.size_; j++)
+		{
 			in >> a;
 			row.push_back(a);
 		}
@@ -41,10 +41,10 @@ istream& operator>>(istream &in, Matrix &x) {
 
 int main()
 {
-	Matrix a;
-	cin >> a;
-	cout << a;
-	system("Pause");
-    return 0;
-}
+	Matrix a(3);
+	std::cin >> a;
+	std::cout << a;
 
+	system("pause");
+	return 0;
+}

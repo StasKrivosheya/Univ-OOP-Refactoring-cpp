@@ -1,142 +1,150 @@
-// Lab_6_4_4(2).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
-#include<iostream>
-#include<string>
-using namespace std;
-
+#include <iostream>
+#include <string>
 
 class StringValidator
 {
 public:
-	virtual ~StringValidator() {};
-	virtual bool isValid(std::string input) = 0;
+	virtual ~StringValidator() { };
+	virtual bool is_valid(std::string input) = 0;
 };
 
-class PatternValidator : public StringValidator {
+class PatternValidator : public StringValidator
+{
+private:
+	std::string val;
 public:
-	string val;
-
-	PatternValidator(string val) : val(val) {}
-
-	bool isValid(std::string input) override;
-
+	PatternValidator(std::string val) : val(val) { }
+	bool is_valid(std::string input) override;
 };
 
-bool PatternValidator::isValid(std::string input) {
-	string tmpStr;
-	bool isPattern = true;
-	for (int i = 0; i < input.size(); i++) {
-		if (input.size() - i < val.size()) {
+bool PatternValidator::is_valid(std::string input)
+{
+	std::string tmp_str;
+	bool is_pattern = true;
+
+	for (int i = 0; i < input.size(); i++)
+	{
+		if (input.size() - i < val.size())
+		{
 			break;
 		}
-		tmpStr = input.substr(i, val.size());
-		for (int j = 0; j < tmpStr.size(); j++) {
-			if (val[j] == '?') continue;
-			if (val[j] == 'D') {
-				if (isdigit(tmpStr[j])) {
+
+		tmp_str = input.substr(i, val.size());
+
+		const char ANY_SYMBOL = '?';
+		const char DIGIT = 'D';
+		const char ALPHA = 'A';
+
+		for (int j = 0; j < tmp_str.size(); j++)
+		{
+			if (val[j] == ANY_SYMBOL)
+				continue;
+
+			if (val[j] == DIGIT)
+			{
+				if (isdigit(tmp_str[j]))
 					continue;
-				}
-				else {
-					isPattern = false;
+				else
+				{
+					is_pattern = false;
 					break;
 				}
 			}
-			if (val[j] == 'A') {
-				if (isalpha(tmpStr[j])) {
+
+			if (val[j] == ALPHA)
+			{
+				if (isalpha(tmp_str[j]))
 					continue;
-				}
-				else {
-					isPattern = false;
+				else
+				{
+					is_pattern = false;
 					break;
 				}
 			}
-			if (isalpha(val[j])) {
-				if (tolower(val[j]) != tolower(tmpStr[j])) {
-					isPattern = false;
+
+			if (isalpha(val[j]))
+			{
+				if (tolower(val[j]) != tolower(tmp_str[j]))
+				{
+					is_pattern = false;
 					break;
 				}
-				else {
+				else
 					continue;
-				}
 			}
-			else {
-				if (val[j] != tmpStr[j]) {
-					isPattern = false;
+			else
+			{
+				if (val[j] != tmp_str[j])
+				{
+					is_pattern = false;
 					break;
 				}
 			}
 		}
-		if (isPattern) {
-			return isPattern;
+		if (is_pattern)
+		{
+			return true;
 		}
-		isPattern = true;
+		is_pattern = true;
 	}
-	return !isPattern;
+	return !is_pattern;
 }
 
-class MaxLengthValidator :public StringValidator {
-private:
-	int num;
-public:
-	MaxLengthValidator(int num) : num(num) {}
-
-	bool isValid(std::string input) override;
-};
-
-bool MaxLengthValidator::isValid(std::string input) {
-	if (input.length() > num) {
-		return false;
-	}
-	else {
-		return true;
-	}
-}
-
-class MinLengthValidator : public StringValidator {
-private:
-	int num;
-public:
-	MinLengthValidator(int num) : num(num) {}
-
-	bool isValid(std::string input) override;
-};
-
-
-
-bool MinLengthValidator::isValid(std::string input) {
-	if (input.length() < num) {
-		return false;
-	}
-	else {
-		return true;
-	}
-}
-
-void printValid(StringValidator &validator, string input)
+class MaxLengthValidator : public StringValidator
 {
-	cout << "The string '" << input << "' is "
-		<< (validator.isValid(input) ? "valid" : "invalid") << endl;
+private:
+	int max_length;
+public:
+	MaxLengthValidator(int max_length) : max_length(max_length) { }
+	bool is_valid(std::string input) override;
+};
+
+bool MaxLengthValidator::is_valid(std::string input)
+{
+	return input.length() <= max_length;
 }
+
+class MinLengthValidator : public StringValidator
+{
+private:
+	int min_length;
+public:
+	MinLengthValidator(int num) : min_length(num) { }
+	bool is_valid(std::string input) override;
+};
+
+
+bool MinLengthValidator::is_valid(std::string input)
+{
+	return input.length() >= min_length;
+}
+
+void print_valid(StringValidator& validator, std::string input)
+{
+	std::cout << "The string '" << input << "' is "
+		<< (validator.is_valid(input) ? "valid" : "invalid") << std::endl;
+}
+
 int main()
 {
-	cout << "MinLengthValidator" << endl;
+	std::cout << "MinLengthValidator" << std::endl;
 	MinLengthValidator min(6);
-	printValid(min, "hello");
-	printValid(min, "welcome");
-	cout << endl;
-	cout << "MaxLengthValidator" << endl;
+	print_valid(min, "hello");
+	print_valid(min, "welcome");
+	std::cout << std::endl;
+
+	std::cout << "MaxLengthValidator" << std::endl;
 	MaxLengthValidator max(6);
-	printValid(max, "hello");
-	printValid(max, "welcome");
-	cout << endl;
-	cout << "PatternValidator" << endl;
+	print_valid(max, "hello");
+	print_valid(max, "welcome");
+	std::cout << std::endl;
+
+	std::cout << "PatternValidator" << std::endl;
 	PatternValidator digit("D");
-	printValid(digit, "there are 2 types of sentences in the world");
-	printValid(digit, "valid and invalid ones");
-	cout << endl;
+	print_valid(digit, "there are 2 types of sentences in the world");
+	print_valid(digit, "valid and invalid ones");
+	std::cout << std::endl;
+
 	system("pause");
 	return 0;
 }
-

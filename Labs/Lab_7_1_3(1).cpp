@@ -1,33 +1,31 @@
-// Lab_7_1_3(1).cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
-#include <string>
 #include <iostream>
-using namespace std;
+#include <string>
 
-int main(void) {
+int main()
+{
 	int a = 0, b = 0, c = 0;
-	
-	cin >> b;
-	cin >> a;
 
-	try {
-		
-		if ((b == 0) and (a == 0)) {
-			throw exception("There is no need for expression.\n");
+	std::cout << "Input a and b:\n";
+	std::cin >> a >> b;
+
+	try
+	{
+		if (b == 0)
+			throw std::exception("Your input is not valid, you can't divide by zero.\n");
+		else if (a == 0)
+			throw std::exception("There is no need for expression.\n");
+		else
+		{
+			c = a / b;
+			std::cout << "The integer part of division is: " << c << std::endl;
 		}
 
-		if (b == 0) throw exception("Your input is not valid, you can't divide by zero.\n");
-		
-		c = a / b;
 	}
-	catch (exception&e) {
-		cout << e.what();
+	catch (std::exception & e)
+	{
+		std::cout << e.what();
 	}
 
-	cout << c << endl;
 	system("pause");
 	return 0;
 }
-
