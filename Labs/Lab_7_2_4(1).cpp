@@ -1,16 +1,10 @@
 #include <iostream>
 #include <string>
 
-class NegativeException : public std::exception
+//exception struct fixed
+struct NegativeException : std::exception
 {
-private:
-	std::string m_error;
-
-public:
-	NegativeException(std::string error)
-		: m_error(error) { }
-
-	const char* what() const noexcept { return m_error.c_str(); }
+	NegativeException(const char* message) : std::exception(message) { }
 };
 
 class GeometryValidator

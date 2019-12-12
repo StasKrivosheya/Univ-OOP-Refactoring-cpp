@@ -75,7 +75,7 @@ std::string Fraction::to_string()
 	return data;
 }
 
-
+//added output (line 87)
 int main()
 {
 	std::string input = "";
@@ -84,6 +84,7 @@ int main()
 	try
 	{
 		Fraction fr(input);
+		std::cout << fr.to_string() << "\nIt is " << fr.decimalize() << " in decimal." << std::endl;
 	}
 	catch (std::exception e)
 	{

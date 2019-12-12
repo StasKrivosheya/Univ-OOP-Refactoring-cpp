@@ -7,17 +7,7 @@ protected:
 	std::string value;
 public:
 	IPAddress(const std::string& value) : value(value) { }
-	IPAddress(const IPAddress& other)
-	{
-		this->value = other.value;
-	}
-
 	IPAddress() { }
-
-	~IPAddress()
-	{
-		value = "";
-	}
 
 	friend std::ostream& operator<<(std::ostream& out, const IPAddress ip);
 };
@@ -48,16 +38,15 @@ public:
 
 	~Network()
 	{
-		if (items)
-			delete[] items;
+		delete[] items;
 	}
 
 	void add_to_array(IPAddress ip_adress);
 
-	friend std::ostream& operator<<(std::ostream& out, const Network ip_adresses);
+	friend std::ostream& operator<<(std::ostream& out, const Network& ip_adresses);
 };
 
-std::ostream& operator<<(std::ostream& out, const Network ip_adresses)
+std::ostream& operator<<(std::ostream& out, const Network& ip_adresses)
 {
 	for (int i = 0; i < ip_adresses.amount; i++)
 		out << ip_adresses.items[i];
@@ -70,7 +59,7 @@ void Network::add_to_array(IPAddress ip_adress)
 	amount++;
 }
 
-void initialize_networks(Network* net1, Network* net2)
+void initialize_networks(Network& net1, Network& net2)
 {
 	const int IP_AMOUNT = 5;
 	const int DELIMITER = 2;
@@ -80,20 +69,20 @@ void initialize_networks(Network* net1, Network* net2)
 	for (int i = 0; i < IP_AMOUNT; i++)
 	{
 		getline(std::cin, str);
-		IPAddress ipAdress(str);
+		IPAddress ip_address(str);
 
 		if (i < DELIMITER)
 		{
-			net1->add_to_array(ipAdress);
+			net1.add_to_array(ip_address);
 		}
 		else if (i == DELIMITER)
 		{
-			net1->add_to_array(ipAdress);
-			net2->add_to_array(ipAdress);
+			net1.add_to_array(ip_address);
+			net2.add_to_array(ip_address);
 		}
 		else
 		{
-			net2->add_to_array(ipAdress);
+			net2.add_to_array(ip_address);
 		}
 
 	}
@@ -101,13 +90,13 @@ void initialize_networks(Network* net1, Network* net2)
 
 int main()
 {
-	Network* net1 = new Network();
-	Network* net2 = new Network();
+	Network net1;
+	Network net2;
 
 	initialize_networks(net1, net2);
 
-	std::cout << "\nNetwork 1\n" << *net1 << std::endl;
-	std::cout << "\nNetwork 2\n" << *net2 << std::endl;
+	std::cout << "\nNetwork 1\n" << net1 << std::endl;
+	std::cout << "\nNetwork 2\n" << net2 << std::endl;
 
 	system("pause");
 	return 0;

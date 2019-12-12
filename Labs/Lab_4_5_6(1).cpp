@@ -1,24 +1,20 @@
+#include <string>
 #include <iostream>
 #include <sstream>
-#include <string>
 
-std::string str_parcer()
+//changed parse_sentence function
+
+std::string parse_sentence(std::string sentence)
 {
-	std::string sentence, line;
+	std::string line;
 
-	std::cout << "Input your line:\n";
-
-	while (getline(std::cin, sentence))
+	std::istringstream parser(sentence);
+	
+	sentence = "";
+	while (parser >> line)
 	{
-		std::istringstream tr(sentence);
-
-		std::cout << "\nOutput from stream:\n";
-
-		while (tr >> line)
-			std::cout << line << ' ';
-
-		std::cout << std::endl;
-		break;
+		sentence += line;
+		sentence += ' ';
 	}
 
 	return sentence;
@@ -26,9 +22,12 @@ std::string str_parcer()
 
 int main()
 {
-	std::string sentence = str_parcer();
+	std::string sentence;
+	getline(std::cin, sentence);
 
-	std::cout << "\nOutput from string variable\n" << sentence << std::endl;
+	sentence = parse_sentence(sentence);
+
+	std::cout << sentence;
 
 	return 0;
 }

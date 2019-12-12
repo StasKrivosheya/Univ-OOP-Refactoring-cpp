@@ -67,8 +67,8 @@ void ShopItemOrder::print_console()
 
 int main()
 {
-	ShopItemOrder item_1("MacBook", 2000.0, 2);
-	item_1.print_console();
+	ShopItemOrder order("MacBook", 2000.0, 2);
+	order.print_console();
 
 	system("pause");
 	return 0;
