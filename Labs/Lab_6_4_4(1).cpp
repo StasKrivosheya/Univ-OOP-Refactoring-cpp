@@ -42,7 +42,8 @@ void print_valid(StringValidator& validator, std::string input) {
 		<< (validator.is_valid(input) ? "valid" : "invalid");
 }
 
-int main() {
+void test_validators()
+{
 	DummyValidator dummy;
 	print_valid(dummy, "hello");
 	std::cout << std::endl;
@@ -53,6 +54,11 @@ int main() {
 
 	print_valid(exact, "secret");
 	std::cout << std::endl << std::endl;
+}
+
+int main()
+{
+	test_validators();
 
 	system("pause");
 	return 0;

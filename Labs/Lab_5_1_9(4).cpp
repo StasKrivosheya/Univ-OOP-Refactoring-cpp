@@ -59,15 +59,16 @@ void ShopItemOrder::print_console()
 {
 	std::cout << "Ordered: " << get_name() << std::endl
 		<< "Number: " << get_number_ordered() << std::endl
-		<< "Price: " << get_unit_price() << std::endl;;
+		<< "Price: " << get_unit_price() << std::endl;
+	std::cout << "================" << std::endl;
+	std::cout << "Total price: " << this->get_total_prise() << std::endl;
+
 }
 
 int main()
 {
 	ShopItemOrder item_1("MacBook", 2000.0, 2);
 	item_1.print_console();
-	std::cout << "================" << std::endl;
-	std::cout << "Total price: " << item_1.get_total_prise() << std::endl;
 
 	system("pause");
 	return 0;

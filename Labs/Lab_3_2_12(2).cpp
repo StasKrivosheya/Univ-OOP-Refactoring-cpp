@@ -8,10 +8,12 @@ int main()
 
 	for (int i = 0; i < M; i++)
 		for (int j = 0; j < N; j++)
-			*(&matrix[0][0] + ((i * M) + j)) = ((i + 1) * (j + 1));
+			*(*(matrix + i) + j) = (i + 1) * (j + 1); //через указатели!
 
-	for (int i = 0; i < M; i++) {
-		for (int j = 0; j < N; j++) {
+	for (int i = 0; i < M; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
 			std::cout.width(4);
 			std::cout << matrix[i][j];
 		}

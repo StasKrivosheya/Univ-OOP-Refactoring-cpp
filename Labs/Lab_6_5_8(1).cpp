@@ -28,77 +28,86 @@ std::ostream& operator<<(std::ostream& out, const IPAddress ip)
 	return out;
 }
 
-class IPAddresses
+class Network
 {
 private:
 	IPAddress* items;
 	int capacity;
 	int amount = 0;
 public:
-	IPAddresses(int capacity) : capacity(capacity)
+	Network(int capacity) : capacity(capacity)
 	{
 		items = new IPAddress[capacity];
 	}
 
-	IPAddresses()
+	Network()
 	{
 		capacity = 10000;
 		items = new IPAddress[capacity];
 	}
 
+	~Network()
+	{
+		if (items)
+			delete[] items;
+	}
+
 	void add_to_array(IPAddress ip_adress);
 
-	friend std::ostream& operator<<(std::ostream& out, const IPAddresses ip_adresses);
+	friend std::ostream& operator<<(std::ostream& out, const Network ip_adresses);
 };
 
-std::ostream& operator<<(std::ostream& out, const IPAddresses ip_adresses)
+std::ostream& operator<<(std::ostream& out, const Network ip_adresses)
 {
-	//out << "Network " << ip_adresses.n << std::endl;
 	for (int i = 0; i < ip_adresses.amount; i++)
 		out << ip_adresses.items[i];
 	return out;
 }
 
-void IPAddresses::add_to_array(IPAddress ip_adress)
+void Network::add_to_array(IPAddress ip_adress)
 {
 	items[amount] = ip_adress;
 	amount++;
 }
 
-int main(void)
+void initialize_networks(Network* net1, Network* net2)
 {
-	std::string str;
-	std::cout << "Enter text:" << std::endl;
-
-	IPAddresses* ip_as_1 = new IPAddresses();
-	IPAddresses* ip_as_2 = new IPAddresses();
-
 	const int IP_AMOUNT = 5;
 	const int DELIMITER = 2;
+	std::string str;
+	std::cout << "Enter text:" << std::endl;
 
 	for (int i = 0; i < IP_AMOUNT; i++)
 	{
 		getline(std::cin, str);
-		IPAddress* ipAdress = new IPAddress(str);
+		IPAddress ipAdress(str);
 
 		if (i < DELIMITER)
 		{
-			ip_as_1->add_to_array(*ipAdress);
+			net1->add_to_array(ipAdress);
 		}
 		else if (i == DELIMITER)
 		{
-			ip_as_1->add_to_array(*ipAdress);
-			ip_as_2->add_to_array(*ipAdress);
+			net1->add_to_array(ipAdress);
+			net2->add_to_array(ipAdress);
 		}
 		else
 		{
-			ip_as_2->add_to_array(*ipAdress);
+			net2->add_to_array(ipAdress);
 		}
 
 	}
+}
 
-	std::cout << "\nNetwork 1\n" << *ip_as_1 << std::endl;
-	std::cout << "\nNetwork 2\n" << *ip_as_2 << std::endl;
+int main()
+{
+	Network* net1 = new Network();
+	Network* net2 = new Network();
+
+	initialize_networks(net1, net2);
+
+	std::cout << "\nNetwork 1\n" << *net1 << std::endl;
+	std::cout << "\nNetwork 2\n" << *net2 << std::endl;
 
 	system("pause");
 	return 0;

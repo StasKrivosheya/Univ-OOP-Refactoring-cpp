@@ -12,65 +12,73 @@ struct Node
 		left_ = left;
 		right_ = right;
 	}
-};
 
-void push(int a, Node*& t)
-{
-	if (t == nullptr)
+	static void push(int value, Node*& node)
 	{
-		t = new Node(a);
+		if (node == nullptr)
+		{
+			node = new Node(value);
+			return;
+		}
+
+		if (node->value_ > value)
+			push(value, node->left_);
+		else
+			push(value, node->right_);
+	}
+
+	static void clear(Node* root)
+	{
+		if (root == nullptr)
+			return;
+
+		clear(root->left_);
+		clear(root->right_);
+		delete root;
 		return;
 	}
 
-	if (t->value_ > a)
-		push(a, t->left_);
-	else
-		push(a, t->right_);
-}
+	static void inorder_recursive(std::ostream& out, Node* current)
+	{
+		if (current == nullptr)
+			return;
 
-void clear(Node* root)
+		inorder_recursive(out, current->left_);
+		out << current->value_ << '\t';
+		inorder_recursive(out, current->right_);
+	}
+
+	friend std::ostream& operator<<(std::ostream& ostr, Node* node);
+};
+
+std::ostream& operator<<(std::ostream& ostr, Node* node)
 {
-	if (root == nullptr)
-		return;
-
-	clear(root->left_);
-	clear(root->right_);
-	delete root;
-	return;
-}
-
-void inorder_recursive(std::ostream& out, Node* current)
-{
-	if (current == nullptr)
-		return;
-
-	inorder_recursive(out, current->left_);
-	out << current->value_ << '\t';
-	inorder_recursive(out, current->right_);
-}
-
-std::ostream& operator<<(std::ostream& ostr, Node* bs)
-{
-	inorder_recursive(ostr, bs);
+	Node::inorder_recursive(ostr, node);
 	return ostr;
 }
 
+void initialize_tree(Node** root, int count)
+{
+	int value;
+	for (int i = 0; i < count; ++i)
+	{
+		std::cin >> value;
+		Node::push(value, *root);
+	}
+}
 
 int main()
 {
 	Node* root = 0;
-	int nodes_to_push, value;
+	int nodes_to_push;
 	std::cout << "Input the amount of nodes to push: ";
 	std::cin >> nodes_to_push;
 
-	for (int i = 0; i < nodes_to_push; ++i)
-	{
-		std::cin >> value;
-		push(value, root);
-	}
+	initialize_tree(&root, nodes_to_push);
 
 	std::cout << std::endl << "Tree is:\n" << root << std::endl;
-	clear(root);
+
+	Node::clear(root);
 
 	system("pause");
 	return 0;

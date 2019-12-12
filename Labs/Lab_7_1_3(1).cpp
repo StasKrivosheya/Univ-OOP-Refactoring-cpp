@@ -1,30 +1,43 @@
 #include <iostream>
 #include <string>
 
-int main()
+void validate_division_operands(int numerator, int denominator)
 {
-	int a = 0, b = 0, c = 0;
+	if ((denominator == 0) && (numerator == 0))
+	{
+		throw std::exception("There is no need for expression.\n");
+	}
 
-	std::cout << "Input a and b:\n";
-	std::cin >> a >> b;
+	if (denominator == 0)
+	{
+		throw std::exception("Your input is not valid, you can't divide by zero.\n");
+	}
+}
 
+int calculate_division(int numerator, int denominator)
+{
 	try
 	{
-		if (b == 0)
-			throw std::exception("Your input is not valid, you can't divide by zero.\n");
-		else if (a == 0)
-			throw std::exception("There is no need for expression.\n");
-		else
-		{
-			c = a / b;
-			std::cout << "The integer part of division is: " << c << std::endl;
-		}
+		validate_division_operands(numerator, denominator);
 
+		return numerator / denominator;
 	}
-	catch (std::exception & e)
+	catch (std::exception e)
 	{
 		std::cout << e.what();
 	}
+}
+
+int main()
+{
+	int numerator = 0, denominator = 0, result = 0;
+
+	std::cout << "Input a and b:\n";
+	std::cin >> numerator >> denominator;
+
+	result = calculate_division(numerator, denominator);
+
+	std::cout << result << std::endl;
 
 	system("pause");
 	return 0;

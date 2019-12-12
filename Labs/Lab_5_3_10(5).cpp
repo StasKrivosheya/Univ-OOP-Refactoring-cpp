@@ -13,6 +13,20 @@ public:
 		denominator_ = denominator;
 	}
 
+	Fraction(std::string input)
+	{
+		const int found = input.find("/");
+		if (found != -1)
+		{
+			std::string a = input.substr(0, found);
+			std::string b = input.substr(found + 1, input.length());
+			numerator_ = stoi(a, 0, 10);
+			denominator_ = stoi(b, 0, 10);
+		}
+		else
+			throw std::exception("Wrong input");
+	}
+
 	int get_numerator()
 	{
 		return numerator_;
@@ -64,23 +78,17 @@ std::string Fraction::to_string()
 
 int main()
 {
-	int num, den;
 	std::string input = "";
 	getline(std::cin, input);
 
-	const int found = input.find("/");
-	if (found != -1)
+	try
 	{
-		std::string a = input.substr(0, found);
-		std::string b = input.substr(found + 1, input.length());
-		num = stoi(a, 0, 10);
-		den = stoi(b, 0, 10);
-
-		Fraction fraction(num, den);
-		std::cout << fraction.to_string() << "\nIt is " << fraction.decimalize() << " in decimal." << std::endl;
+		Fraction fr(input);
 	}
-	else
-		std::cout << "Wrong input!" << std::endl;
+	catch (std::exception e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 
 	system("pause");
 	return 0;

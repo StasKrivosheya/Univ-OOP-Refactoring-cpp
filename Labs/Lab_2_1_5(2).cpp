@@ -1,28 +1,41 @@
 #include <iostream>
 
+bool validate_grossprice(float grossprice)
+{
+	const int GROSS_PRICE_MIN = 0;
+
+	return grossprice > GROSS_PRICE_MIN;
+}
+
+bool validate_taxrate(float taxrate)
+{
+	const int TAXRATE_MIN = 0;
+	const int TAXRATE_MAX = 100;
+
+	return taxrate > TAXRATE_MIN && taxrate <= TAXRATE_MAX;
+}
+
 void calculate_tax(float gross_price, float tax_rate)
 {
 	std::cout << "grossprice = " << gross_price
 						<< "\ttaxrate = " << tax_rate << std::endl;
 
-	if (gross_price > 0)
+	bool isDataValid =	validate_grossprice(grossprice) &&
+						validate_taxrate(taxrate);
+
+	if (isDataValid)
 	{
-		if ((tax_rate > 0) && (tax_rate <= 100))
-		{
-			float net_price, tax_value;
+		float netprice = grossprice / (1 + (taxrate / 100));
+		float taxvalue = netprice * (taxrate / 100);
 
-			net_price = gross_price / (1 + (tax_rate / 100));
-			tax_value = net_price * (tax_rate / 100);
-
-			std::cout << "Net price: " << net_price << std::endl;
-			std::cout << "Tax value: " << tax_value << std::endl;
-			std::cout << std::endl;
-
-			return;
-		}
+		cout << "Net price: " << netprice << endl;
+		cout << "Tax value: " << taxvalue << endl << endl;
 	}
-	std::cout << "Wrong info!";
-	std::cout << std::endl;
+	else
+	{
+		std::cout << "Wrong info!";
+		std::cout << std::endl;
+	}
 }
 
 int main(void)

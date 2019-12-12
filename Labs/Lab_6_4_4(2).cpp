@@ -1,10 +1,10 @@
-#include <iostream>
-#include <string>
+#include<iostream>
+#include<string>
 
 class StringValidator
 {
 public:
-	virtual ~StringValidator() { };
+	virtual ~StringValidator() {};
 	virtual bool is_valid(std::string input) = 0;
 };
 
@@ -13,7 +13,7 @@ class PatternValidator : public StringValidator
 private:
 	std::string val;
 public:
-	PatternValidator(std::string val) : val(val) { }
+	PatternValidator(std::string val) : val(val) {}
 	bool is_valid(std::string input) override;
 };
 
@@ -25,9 +25,7 @@ bool PatternValidator::is_valid(std::string input)
 	for (int i = 0; i < input.size(); i++)
 	{
 		if (input.size() - i < val.size())
-		{
 			break;
-		}
 
 		tmp_str = input.substr(i, val.size());
 
@@ -37,11 +35,12 @@ bool PatternValidator::is_valid(std::string input)
 
 		for (int j = 0; j < tmp_str.size(); j++)
 		{
-			if (val[j] == ANY_SYMBOL)
-				continue;
-
-			if (val[j] == DIGIT)
+			switch (val[j])
 			{
+			case ANY_SYMBOL:
+				continue;
+				break;
+			case DIGIT:
 				if (isdigit(tmp_str[j]))
 					continue;
 				else
@@ -49,10 +48,8 @@ bool PatternValidator::is_valid(std::string input)
 					is_pattern = false;
 					break;
 				}
-			}
-
-			if (val[j] == ALPHA)
-			{
+				break;
+			case ALPHA:
 				if (isalpha(tmp_str[j]))
 					continue;
 				else
@@ -60,26 +57,28 @@ bool PatternValidator::is_valid(std::string input)
 					is_pattern = false;
 					break;
 				}
-			}
-
-			if (isalpha(val[j]))
-			{
-				if (tolower(val[j]) != tolower(tmp_str[j]))
+			default:
+				if (isalpha(val[j]))
 				{
-					is_pattern = false;
-					break;
+					if (tolower(val[j]) != tolower(tmp_str[j]))
+					{
+						is_pattern = false;
+						break;
+					}
+					else
+						continue;
 				}
 				else
-					continue;
-			}
-			else
-			{
-				if (val[j] != tmp_str[j])
 				{
-					is_pattern = false;
-					break;
+					if (val[j] != tmp_str[j])
+					{
+						is_pattern = false;
+						break;
+					}
 				}
+				break;
 			}
+
 		}
 		if (is_pattern)
 		{
@@ -95,7 +94,8 @@ class MaxLengthValidator : public StringValidator
 private:
 	int max_length;
 public:
-	MaxLengthValidator(int max_length) : max_length(max_length) { }
+	MaxLengthValidator(int num) : max_length(num) { }
+
 	bool is_valid(std::string input) override;
 };
 
@@ -110,9 +110,9 @@ private:
 	int min_length;
 public:
 	MinLengthValidator(int num) : min_length(num) { }
+
 	bool is_valid(std::string input) override;
 };
-
 
 bool MinLengthValidator::is_valid(std::string input)
 {
@@ -125,7 +125,7 @@ void print_valid(StringValidator& validator, std::string input)
 		<< (validator.is_valid(input) ? "valid" : "invalid") << std::endl;
 }
 
-int main()
+void test_validators()
 {
 	std::cout << "MinLengthValidator" << std::endl;
 	MinLengthValidator min(6);
@@ -144,6 +144,11 @@ int main()
 	print_valid(digit, "there are 2 types of sentences in the world");
 	print_valid(digit, "valid and invalid ones");
 	std::cout << std::endl;
+}
+
+int main()
+{
+	test_validators();
 
 	system("pause");
 	return 0;

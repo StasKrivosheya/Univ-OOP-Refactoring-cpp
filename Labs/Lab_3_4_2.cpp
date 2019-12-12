@@ -1,10 +1,11 @@
 #include <iostream>
 
+const int MONTH_AMOUNT = 12;
+
 bool is_leap(int year)
 {
-	if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
-		return true;
-	return false;
+	bool is_leap = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+	return is_leap;
 }
 
 int monthLength(int year, int month)
@@ -19,17 +20,21 @@ int monthLength(int year, int month)
 	}
 }
 
-int main(void)
+void print(int year1, int year2)
 {
-	const int year1 = 2000;
-	const int year2 = 2002;
-	const int month_amount = 12;
-
 	for (int yr = year1; yr < year2; yr++) {
-		for (int mo = 1; mo <= month_amount; mo++)
+		for (int mo = 1; mo <= MONTH_AMOUNT; mo++)
 			std::cout << monthLength(yr, mo) << " ";
 		std::cout << std::endl;
 	}
+}
+
+int main(void)
+{
+	const int YEAR1 = 2000;
+	const int YEAR2 = 2002;
+
+	print(YEAR1, YEAR2);
 
 	system("pause");
 	return 0;

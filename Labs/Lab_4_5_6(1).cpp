@@ -2,7 +2,7 @@
 #include <sstream>
 #include <string>
 
-int main()
+std::string str_parcer()
 {
 	std::string sentence, line;
 
@@ -20,6 +20,13 @@ int main()
 		std::cout << std::endl;
 		break;
 	}
+
+	return sentence;
+}
+
+int main()
+{
+	std::string sentence = str_parcer();
 
 	std::cout << "\nOutput from string variable\n" << sentence << std::endl;
 
